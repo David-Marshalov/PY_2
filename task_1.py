@@ -1,84 +1,72 @@
-import doctest
-class Book:
-    def __init__(self, author: str):
-        self.author = author
-        self.last_read_page = 0
-        self.pages = 500
-        self.notices = []
+class Сountry:
+    """ Базовый класс страна. """
+
+    laws_of_country = {}
+
+    def __init__(self, name_first: str, continents: str, size: int, count_population: int):
+        """Конструктор
+
+        name_first - название страны
+        continents - континент где расположена страна
+        size - размер страны
+        count_population - колич населения проживающая в данной стране
         """
-                Создание и подготовка к работе объекта "Книга"
-                :param author: Автор
+        self.name_first = name_first
+        self.continents = continents
+        self.size = size
+        self.count_population = count_population
+
+    @classmethod
+    def add_low(self, number_low: int, means_low:str):
+        if number_low in Сountry.laws_of_country:
+            print("Этот закон уже добавлен в словарь")
+        else:
+            Сountry.laws_of_country[number_low] = means_low
+
+
+
+    def __str__(self)-> str:
+        """магический метод для отображения информации об объекте класса для пользователей """
+        return f"Страна {self.name_first}. Континент {self.continents}. Рзамер {self.size}. Количество населения {self.count_population}"
+
+    def __repr__(self)-> str:
+        """магический метод для отображения информации об объекте класса в режиме отладки """
+        return f"{self.__class__.__name__}(name={self.name_first!r}, Континент={self.continents!r}, Размер={self.size!r}, Количество населения={self.count_population!r})"
+
+
+class City(Сountry):
+    """ Базовый класс город. """
+    def __init__(self, name_first: str, continents: str, size: int, count_population: int,  name_city: str, size_city: int, count_population_city: int):
+        """Конструктор
+
+        name_city - название города
+
+        size_city - размер города
+        count_population_city - колич населения проживающая в данном городе
         """
-        if not isinstance(author, str):
-            raise TypeError("Имя автора должен быть типа str")
+        super().__init__(name_first, continents, size, count_population)
+        self.name_city = name_city
+        self.size_city = size_city
+        self.count_population_city = count_population_city
 
-    def increment_last_read_page(self, read_pages: int) -> None:
-        if not isinstance(read_pages, int):
-            raise TypeError("Тип количества прочтенных старниц болжен быть int")
-        if read_pages < 0:
-            raise ValueError("Количество страниц не может быть отрицательным")
-        if self.last_read_page + read_pages > self.pages:
-            raise ValueError("Вы не могли прочитать больше чем количество страниц в книге")
-        self.last_read_page += read_pages
 
-    def add_notice(self, notice: str) -> None:
-        if not isinstance(notice, str):
-            raise TypeError(" Заметка должена быть типа str")
-        self.notices.append("notice")
+    def __str__(self)-> str:
+        """магический метод для отображения информации об объекте класса для пользователей """
+        return f"Город {self.name_city}. Размер города {self.size_city}. Количество населения {self.count_population_city}."
+
+    def __repr__(self)-> str:
+        """магический метод для отображения информации об объекте класса в режиме отладки """
+        return f"{self.__class__.__name__}(name={self.name_city!r}, Размер города={self.size_city!r},  Количество населения={self.count_population_city!r})"
 
 
 
+x = City("Россия", "asia", 17098246, 140000000, "Санкт-Петербург", 1439, 5607916)
+print(x.__dict__)
 
-class Employee:
-    """Базовый класс для всех сотрудников
-    :raise TypeError:если имя  не типа str будет вызывать ошибку
-    """
-    emp_count = 0
+Сountry.add_low(123, "ghbf")
 
-    def __init__(self, name: str, salary)->None:
-        if not isinstance(name, str):
-            raise TypeError("Тип  болжен быть str")
-        self.name = name
-        self.salary = salary
-        Employee.emp_count += 1
+City.add_low(12, "dfsfs")
 
-    def display_count(self) ->float:
-        print('Всего сотрудников: %d' % Employee.emp_count)
+City.add_low(12, "222")
 
-    def display_employee(self):
-        print('Имя: {}. Зарплата: {}'.format(self.name, self.salary))
-
-
-class Point:
-    """Задаем точки в пространстве
-
-    :raise TypeError:если значение точки в пространстве не будет типа int будет вызывать ошибку
-    :raise TypeError:если имя и  цвет не типа str будет вызывать ошибку
-    """
-    color = 'red'
-    circle = 2
-
-    def __init__(self, x : int, y : int)->float:
-        if not isinstance(x, int):
-            raise TypeError("Тип  болжен быть int")
-        if not isinstance(y, int):
-            raise TypeError("Тип  болжен быть int")
-        self.x = x
-        self.y = y
-
-    def __init__(self, name: str, color: str )->str:
-        if not isinstance(name, str):
-            raise TypeError("Тип  болжен быть str")
-        if not isinstance(color, str):
-            raise TypeError("Тип  болжен быть str")
-        self.name = name
-        self.color = color
-
-point = Point("Dava", "green")
-print(point.__dict__)
-
-
-if __name__ == "__main__":
-    doctest.testmod()
-    # TODO работоспособность экземпляров класса проверить с помощью doctest
-    pass
+print(City.laws_of_country)
